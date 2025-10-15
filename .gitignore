@@ -1,3 +1,4 @@
 plugins/
 bin/
 __pycache__/
+output

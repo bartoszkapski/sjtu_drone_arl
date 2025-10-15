@@ -1,3 +1,12 @@
+# PUT UPDATE
+In order to open workspace with development options follow these steps:
+1. Open entire github repository in VSCode
+1. On the popup notification follow installation of the DevContainers extension
+1. On the popup notification or by pressing Ctrl+Shift+P open the command palette and select "Dev Containers: Reopen in Container"
+1. Wait for the container to build and start and you are ready to develop and create new packages!
+
+For further development Dockerfile and run_docker.sh were moved to archive - they are not developed in this phase.
+
 # sjtu_drone
 
 [![Iron](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/NovoG93/589e4b4dc8d92861e4b92defff6d56c0/raw/_iron_build.json)](https://github.com/NovoG93/sjtu_drone/actions/workflows/CI_CD.yml) [![Humble](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/NovoG93/589e4b4dc8d92861e4b92defff6d56c0/raw/_humble_build.json)](https://github.com/NovoG93/sjtu_drone/actions/workflows/CI_CD.yml) [![Rolling](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/NovoG93/589e4b4dc8d92861e4b92defff6d56c0/raw/_rolling_build.json)](https://github.com/NovoG93/sjtu_drone/actions/workflows/CI_CD.yml)
