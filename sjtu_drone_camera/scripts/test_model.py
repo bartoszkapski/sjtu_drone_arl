@@ -1,5 +1,5 @@
 """
-python3 test_model.py --weights ../models/album_frame_4_number_three_v2_finetune/weights/best.pt --source ../albums/album_frame_4/val/images
+python3 test_model.py --weights ../models/album_human_human_finetune/weights/best.pt --source ../albums/album_human/val/images
 """
 
 

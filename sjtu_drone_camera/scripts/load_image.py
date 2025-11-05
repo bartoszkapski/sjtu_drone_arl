@@ -380,8 +380,8 @@ def main():
         yolo_bbox=(cx, cy, w, h),
         class_id=class_id,
         img_size=640,     # zmień jeśli chcesz inny rozmiar wejścia
-        n_train=100,      # liczba próbek treningowych
-        n_val=20,         # liczba próbek walidacyjnych
+        n_train=60,      # liczba próbek treningowych
+        n_val=10,         # liczba próbek walidacyjnych
         seed=42,
     )
     print(f"Album zapisany w: {out_dir}")

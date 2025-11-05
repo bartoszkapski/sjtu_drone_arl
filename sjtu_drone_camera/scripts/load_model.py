@@ -3,7 +3,7 @@
 """
 python3 load_model.py ../models/album_frame_4_number_three_v2_finetune/weights/best.pt
 
-python3 load_model.py ../models/album_frame_6_traffic_cone_finetune/weights/best.pt
+python3 load_model.py ../models/album_human_human_finetune/weights/best.pt
 
 """
 

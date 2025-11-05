@@ -40,23 +40,23 @@ class DroneObject(Node):
         self.logger = self.get_logger()
 
         # Publishers
-        self.pubTakeOff = self.create_publisher(Empty, '~/takeoff', 1024)
-        self.pubLand = self.create_publisher(Empty, '~/land', 1024)
-        self.pubReset = self.create_publisher(Empty, '~/reset', 1024)
-        self.pubPosCtrl = self.create_publisher(Bool, '~/posctrl', 1024)
-        self.pubCmd = self.create_publisher(Twist, '~/cmd_vel', 1024)
-        self.pubVelMode = self.create_publisher(Bool, '~/dronevel_mode', 1024)
+        self.pubTakeOff = self.create_publisher(Empty, 'takeoff', 1024)
+        self.pubLand = self.create_publisher(Empty, 'land', 1024)
+        self.pubReset = self.create_publisher(Empty, 'reset', 1024)
+        self.pubPosCtrl = self.create_publisher(Bool, 'posctrl', 1024)
+        self.pubCmd = self.create_publisher(Twist, 'cmd_vel', 1024)
+        self.pubVelMode = self.create_publisher(Bool, 'dronevel_mode', 1024)
 
         # Subscribers
-        self.sub_sonar = self.create_subscription(Range, '~/sonar', self.cb_sonar, 1024)
-        self.sub_imu = self.create_subscription(Range, '~/imu', self.cb_imu, 1024)
-        self.sub_front_img = self.create_subscription(Image, '~/front/image_raw',
+        self.sub_sonar = self.create_subscription(Range, 'sonar', self.cb_sonar, 1024)
+        self.sub_imu = self.create_subscription(Range, 'imu', self.cb_imu, 1024)
+        self.sub_front_img = self.create_subscription(Image, 'front/image_raw',
                                                       self.cb_front_img, 1024)
-        self.sub_bottom_img = self.create_subscription(Image, '~/bottom/image_raw',
+        self.sub_bottom_img = self.create_subscription(Image, 'bottom/image_raw',
                                                        self.cb_bottom_img, 1024)
-        self.sub_gt_pose = self.create_subscription(Pose, '~/gt_pose', self.cb_gt_pose, 1024)
-        self.sub_state = self.create_subscription(Int8, '~/state', self.cb_state, 1024)
-        self.sub_cmd_mode = self.create_subscription(String, '~/cmd_mode', self.cb_cmd_mode, 1024)
+        self.sub_gt_pose = self.create_subscription(Pose, 'gt_pose', self.cb_gt_pose, 1024)
+        self.sub_state = self.create_subscription(Int8, 'state', self.cb_state, 1024)
+        self.sub_cmd_mode = self.create_subscription(String, 'cmd_mode', self.cb_cmd_mode, 1024)
 
         self._sonar = Range()
         self._imu = Imu()
