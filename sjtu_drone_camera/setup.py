@@ -13,10 +13,7 @@ setup(
     ],
     install_requires=[
         'setuptools',
-        'ultralytics==8.3.25',
-        'torch==2.4.1+cpu',
-        'opencv-python==4.5.4',
-        'numpy==1.26.3',        
+        'ultralytics==8.3.25',        
     ],
     zip_safe=True,
     maintainer='fhtw_user',

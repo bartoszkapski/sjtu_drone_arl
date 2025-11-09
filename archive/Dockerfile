@@ -9,6 +9,8 @@ RUN apt-get update \
     build-essential \
     && apt-get clean
 
+RUN pip3 install ultralytics==8.3.25
+
 # Get gazebo binaries
 RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list \
     && wget http://packages.osrfoundation.org/gazebo.key -O - | apt-key add - \
