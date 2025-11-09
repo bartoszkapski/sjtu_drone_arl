@@ -1,0 +1,7 @@
+PREPARE THE ENVIRONMENT (FIRST LAUNCH)
+
+fhtw_user@c8cbad6b5986:~/sim_ws
+
+cd src
+source setup_env.sh
+source install/setup.bash
