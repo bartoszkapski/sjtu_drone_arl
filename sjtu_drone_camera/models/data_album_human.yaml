@@ -1,0 +1,5 @@
+train: /home/fhtw_user/sim_ws/src/sjtu_drone_camera/models/staged_train_with_dummies/images
+val: /home/fhtw_user/sim_ws/src/sjtu_drone_camera/albums/album_human/val/images
+
+# one-class dataset
+names: ['human']

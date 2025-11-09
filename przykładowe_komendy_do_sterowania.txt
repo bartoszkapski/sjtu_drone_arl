@@ -7,7 +7,7 @@ ros2 launch sjtu_drone_bringup sjtu_drone_bringup.launch.py
 
 ros2 run sjtu_drone_control open_loop_control --ros-args -r __ns:=/simple_drone -- --task square --distance 4
 
-ros2 run sjtu_drone_control drone_position_control --ros-args -r __ns:=/simple_drone -- --y 6.0 --z 10.0
+ros2 run sjtu_drone_control drone_position_control --ros-args -r __ns:=/simple_drone -- --x 0.0 --y 6.0 --z 10.0
 
 
 

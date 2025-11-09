@@ -12,8 +12,7 @@ setup(
         ('share/' + package_name, ['package.xml']),
     ],
     install_requires=[
-        'setuptools',
-        'ultralytics==8.3.25',        
+        'setuptools',      
     ],
     zip_safe=True,
     maintainer='fhtw_user',

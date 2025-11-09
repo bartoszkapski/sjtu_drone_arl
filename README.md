@@ -7,6 +7,17 @@ In order to open workspace with development options follow these steps:
 
 For further development Dockerfile and run_docker.sh were moved to archive - they are not developed in this phase.
 
+
+# PREPARE THE ENVIRONMENT (FIRST LAUNCH)
+When launching the container for the first time, you need to prepare the environment by running the following commands:
+
+```bash
+cd src
+source setup_env.sh
+source install/setup.bash
+```
+
+
 # sjtu_drone
 
 [![Iron](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/NovoG93/589e4b4dc8d92861e4b92defff6d56c0/raw/_iron_build.json)](https://github.com/NovoG93/sjtu_drone/actions/workflows/CI_CD.yml) [![Humble](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/NovoG93/589e4b4dc8d92861e4b92defff6d56c0/raw/_humble_build.json)](https://github.com/NovoG93/sjtu_drone/actions/workflows/CI_CD.yml) [![Rolling](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/NovoG93/589e4b4dc8d92861e4b92defff6d56c0/raw/_rolling_build.json)](https://github.com/NovoG93/sjtu_drone/actions/workflows/CI_CD.yml)
