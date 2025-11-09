@@ -10,12 +10,12 @@
 	"runArgs": [
 		"--shm-size=2g",
 		"--privileged",
-		"--gpus=all",
+		// "--gpus=all",
 		"--volume=/tmp/.X11-unix:/tmp/.X11-unix"
 	],
 	"containerEnv": {
-		"DISPLAY": "${localEnv:DISPLAY}",
-		"LIBGL_ALWAYS_SOFTWARE": "1" // Needed for software rendering of opengl
+		"DISPLAY": "${localEnv:DISPLAY}"
+		// "LIBGL_ALWAYS_SOFTWARE": "1" // Needed for software rendering of opengl
 	},
 	// Set *default* container specific settings.json values on container create.
 	"customizations": {
