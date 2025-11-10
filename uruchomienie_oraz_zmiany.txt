@@ -1,0 +1,42 @@
+*** Przygotowanie środowiska - FIRST LAUNCH
+fhtw_user@c8cbad6b5986:~/sim_ws
+cd src
+source setup_env.sh
+source install/setup.bash
+
+-----------------------------Szymon poniżej dopisał-------------------------
+
+*** uruchomienie programu szukajacego ludzi z całym środowiskiem jedną komendą
+fhtw_user@4a3159a2a637:~/sim_ws$ 
+bash src/scripts/launch_human_search.sh                  <----------------------------------------------------------------ODPALANIE WSZYSTKIEGO TU
+
+
+*** parametry do ustawienia jak i cała maszyna stanów w:
+src/sjtu_drone_control/sjtu_drone_control/drone_search_mission.py
+
+
+*** Dokumentacja z czata - lokalizacja plików:
+src/CZATOWY_WYSRYW
+
+
+możliwe poprawki TODO's:
+- czasem nie do końca działa dokładnie centrowanie nad człowiekiem przez ruszanie się kamery podczas lotu na boki
+- mozna tez doregulowac PID w paramertach dla lepszej stabilności/ bądź zmienic trajektorie na więcej punktów 
+- dodac jakieś śmieci na mapie, zmniejszyć nie potrzebna taka duża, ekslopracja będzie na +-12m od punktu startowego, uważać zeby dron nie wleciał w coś na 10m w tym obszarze np. dom 
+- zmienić w kodzie wszystko co wygląda na wysrane z czata (np. komentarze z ikonkami itp.)(ja już troche zmieniłem w drone_search_mission.py przy parametrach),
+ może jakaś refaktoryzacja kodu na inne nazwy ludzkie/studenckie czy coś
+----------------------------------------------------------------------------
+
+
+*** Uruchomienie bazowego środowiska bez programu poszukującego
+ros2 launch sjtu_drone_bringup sjtu_drone_bringup.launch.py
+
+*** Aby to działało to dron musi być już w powietrzu tzn. ręcznie przez teleop trzeba uruchomić takeoff
+ros2 run sjtu_drone_control open_loop_control --ros-args -r __ns:=/simple_drone -- --task square --distance 4
+ros2 run sjtu_drone_control drone_position_control --ros-args -r __ns:=/simple_drone -- --x 0.0 --y 6.0 --z 10.0
+
+*** Uruchomienie detekcji osobno 
+ros2 run sjtu_drone_camera detect_object_by_yolo
+
+*** Zmiana aktywnego modelu detekcji
+python3 load_model.py ../models/album_human_human_finetune/weights/best.pt

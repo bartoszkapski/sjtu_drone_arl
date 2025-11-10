@@ -328,7 +328,8 @@ class DroneObject(Node):
     def cb_state(self, msg: Int8):
         """Callback for the drone state"""
         self._state = STATES[msg.data]
-        self.logger.info("State: {}".format(self._state), throttle_duration_sec=1)
+        # Reduced logging frequency to avoid spam
+        self.logger.info("State: {}".format(self._state), throttle_duration_sec=10)
 
     def cb_cmd_mode(self, msg: String):
         """Callback for the command mode"""

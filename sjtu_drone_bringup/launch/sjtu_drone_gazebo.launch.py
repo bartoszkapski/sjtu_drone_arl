@@ -18,7 +18,7 @@ import yaml
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction, SetEnvironmentVariable
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -75,6 +75,9 @@ def generate_launch_description():
         return []
 
     return LaunchDescription([
+        # Suppress Gazebo texture warnings (show only errors)
+        SetEnvironmentVariable('GAZEBO_VERBOSITY', '1'),
+        
         world,
         use_gui,
         Node(

@@ -2,12 +2,14 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
+from std_msgs.msg import String
 
 from cv_bridge import CvBridge
 import cv2
 from ultralytics import YOLO
 
 import time
+import json
 
 
 
@@ -16,6 +18,10 @@ class DetectObjectByYolo(Node):
         super().__init__('detect_object_by_yolo')
         self.sub = self.create_subscription(Image, '/simple_drone/bottom/image_raw', self.callback_read_image, 10)
         self.pub = self.create_publisher(Image, '/simple_drone/bottom/image_object_detection', 10)
+        
+        # NEW: Publisher for detection results (Bool + confidence)
+        self.pub_detection = self.create_publisher(String, '/detection/human_detected', 10)
+        
         self.bridge = CvBridge()
 
         self.declare_parameter('target_class_name', '')
@@ -90,16 +96,58 @@ class DetectObjectByYolo(Node):
                 verbose=False,
             )
 
-            # Annotacja i publikacja
+            # Annotacja i publikacja wizualizacji
             vis_bgr = results[0].plot()  # BGR numpy z narysowanymi bboxami
             out_msg = self.bridge.cv2_to_imgmsg(vis_bgr, encoding='bgr8')
             out_msg.header = msg.header  # zachowaj timestamp/frame_id
             self.pub.publish(out_msg)
+            
+            # NEW: Publish detection results (detected: bool, max_confidence: float)
+            detection_result = self._extract_detection_info(results[0])
+            det_msg = String()
+            det_msg.data = json.dumps(detection_result)
+            self.pub_detection.publish(det_msg)
 
         except Exception as e:
             self.get_logger().error(f"inference error: {e}")
         finally:
             self._busy = False
+    
+    def _extract_detection_info(self, result):
+        """
+        Extract detection info from YOLO result.
+        Returns: {"detected": bool, "confidence": float, "count": int, "bbox_center": {x, y}}
+        """
+        boxes = result.boxes
+        if boxes is None or len(boxes) == 0:
+            return {"detected": False, "confidence": 0.0, "count": 0, "bbox_center": None}
+        
+        # Get max confidence detection and its bbox
+        confidences = boxes.conf.cpu().numpy()
+        max_conf_idx = confidences.argmax()
+        max_conf = float(confidences[max_conf_idx])
+        
+        # Get bbox center of highest confidence detection (normalized 0-1)
+        xyxy = boxes.xyxy[max_conf_idx].cpu().numpy()  # [x1, y1, x2, y2]
+        bbox_x_center = float((xyxy[0] + xyxy[2]) / 2)
+        bbox_y_center = float((xyxy[1] + xyxy[3]) / 2)
+        
+        # Get image dimensions from result
+        img_height, img_width = result.orig_shape  # (height, width)
+        
+        # Normalize to 0-1 range
+        bbox_center_normalized = {
+            'x': bbox_x_center / img_width,   # 0 = left, 1 = right
+            'y': bbox_y_center / img_height,  # 0 = top, 1 = bottom
+        }
+        
+        return {
+            "detected": True,
+            "confidence": max_conf,
+            "count": len(boxes),
+            "bbox_center": bbox_center_normalized,
+            "timestamp": time.time()
+        }
 
 
 

@@ -25,6 +25,7 @@ setup(
             'open_loop_control = sjtu_drone_control.open_loop_control:main',
             'drone_position_control = sjtu_drone_control.drone_position_control:main',
             'drone_spiral_fly = sjtu_drone_control.drone_spiral_fly:main',
+            'drone_search_mission = sjtu_drone_control.drone_search_mission:main',
         ],
     },
 )
