@@ -4,7 +4,7 @@
 
 ---
 
-## 📋 Spis treści
+## 📋 Spis treśc
 - [Opis projektu](#opis-projektu)
 - [Uruchomienie programu](#uruchomienie-programu)
 - [Parametry konfiguracyjne](#parametry-konfiguracyjne)
