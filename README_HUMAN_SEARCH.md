@@ -1,17 +1,16 @@
 # 🚁 Autonomous Drone Human Search Mission
 
-**Autonomiczny dron poszukujący ludzi z wykorzystaniem YOLO v11 i maszyny stanów**
+**Autonomiczny dron poszukujący ludzi z wykorzystaniem YOLO v11 light i maszyny stanów**
 
 ---
 
 ## 📋 Spis treści
 - [Opis projektu](#opis-projektu)
-- [Maszyna stanów](#maszyna-stanów)
-- [Uruchomienie - JEDNA KOMENDA](#uruchomienie---jedna-komenda)
+- [Uruchomienie programu](#uruchomienie-programu)
 - [Monitoring misji](#monitoring-misji)
 - [Parametry konfiguracyjne](#parametry-konfiguracyjne)
 - [Struktura projektu](#struktura-projektu)
-- [Troubleshooting](#troubleshooting)
+- [Wybór obiektu detekji](#Wybór-obiektu-detekcji)
 
 ---
 
@@ -20,14 +19,14 @@
 System autonomicznego drona, który:
 1. **Startuje** z miejsca na wysokość 10m i czeka 3 sekundy
 2. **Przeszukuje** obszar po rozszerzających się kwadratach (2m → 20m, +2m)
-3. **Wykrywa** ludzi za pomocą YOLO v11 (weryfikacja 5 kolejnych klatek, confidence > 0.8)
+3. **Wykrywa** ludzi za pomocą YOLO v11 light (weryfikacja 5 kolejnych klatek, confidence > 0.8)
 4. **Zawisa** i wraca do punktu detekcji
 5. **Centruje się** precyzyjnie nad wykrytą osobą (PID, tolerancja 0.1m)
 6. **Krąży** 2x nad wykrytą osobą (promień 2m)
 7. **Wraca** do punktu startu, **schodzi** do 1m i ląduje
 
 ### Kluczowe cechy:
-- ✅ Detekcja w czasie rzeczywistym (YOLO v11)
+- ✅ Detekcja w czasie rzeczywistym (YOLO v11 light)
 - ✅ Weryfikacja wielokrotna (5 kolejnych klatek)
 - ✅ Rozszerzające się kwadraty poszukiwania
 - ✅ Precyzyjne pozycjonowanie PID
@@ -37,91 +36,19 @@ System autonomicznego drona, który:
 
 ---
 
-## 🔄 Maszyna stanów
 
-```
-┌──────────┐
-│   IDLE   │ (inicjalizacja)
-└────┬─────┘
-     │
-     ▼
-┌──────────┐
-│ TAKEOFF  │ ◄─── Start + czekanie 3s
-└────┬─────┘      Zapisanie home position
-     │
-     ▼
-┌─────────────────────────┐
-│ EXPANDING_SQUARE_SEARCH │ ◄─── Kwadraty: 2m → 4m → 6m → ... → 20m
-│     🔍 + YOLO           │      Detekcja w tle (10m wysokość)
-└──┬────────────┬─────────┘
-   │            │
-   │ wykryto    │ nie znaleziono
-   │            │
-   ▼            ▼
-┌───────────┐  ┌──────────────┐
-│ HOVERING  │  │ RETURN_HOME  │
-│ (powrót)  │  │     🏠       │
-└─────┬─────┘  └──────┬───────┘
-      │                │
-      ▼                │
-┌────────────┐         │
-│ CENTERING  │         │
-│ (PID 0.1m) │         │
-└─────┬──────┘         │
-      │                │
-      ▼                │
-┌───────────┐          │
-│ CIRCLING  │          │
-│ (2x okr.) │          │
-└─────┬─────┘          │
-      │                │
-      └────────┬───────┘
-               │
-               ▼
-        ┌──────────────┐
-        │ DESCENDING   │
-        │ (do 1m)      │
-        └──────┬───────┘
-               │
-               ▼
-        ┌──────────┐
-        │ LANDING  │
-        └────┬─────┘
-             │
-             ▼
-        ┌──────────┐
-        │ COMPLETE │
-        └──────────┘
-```
 
-### Opis stanów:
-- **IDLE** - Inicjalizacja systemu
-- **TAKEOFF** - Start na wysokość 10m, zapisanie home position, czekanie 3s
-- **EXPANDING_SQUARE_SEARCH** - Poszukiwanie po rozszerzających się kwadratach (2m→20m), detekcja YOLO w tle
-- **HOVERING** - Po wykryciu: powrót do punktu detekcji i stabilizacja
-- **CENTERING** - Precyzyjne centrowanie nad wykrytą osobą (PID, tolerancja 0.1m)
-- **CIRCLING** - Krążenie nad osobą (2 okrążenia, promień 2m)
-- **RETURN_HOME** - Powrót do punktu startu na wysokości 10m
-- **DESCENDING** - Zniżanie do wysokości 1m nad punktem startu
-- **LANDING** - Lądowanie
-- **COMPLETE** - Misja zakończona
 
----
+## 🚀 Uruchomienie programu
 
-## 🚀 Uruchomienie - JEDNA KOMENDA
 
-### Launch całego systemu:
+## Przed pierwszym uruchomieniem konieczna jest aktualizacja bibliotek odpowiedzlnych za przetwarzanie obrazu kamery
 ```bash
 cd ~/sim_ws
+source src/setup_env.sh
 source install/setup.bash
 bash src/scripts/launch_human_search.sh
 ```
-
-**Co się uruchomi:**
-1. Gazebo (symulator)
-2. Dron SJTU
-3. YOLO detector (detekcja ludzi)
-4. Mission controller (autonomiczna misja)
 
 
 ## 📊 Monitoring misji
@@ -284,13 +211,42 @@ sjtu_drone_bringup/
 ---
 
 
-## 📝 Changelog
+**Wybór obiektu detekji**
+Detekcja obiektu jest uzależniona od obecnego modelu current_used_model.pt znajdującego się w folderze:
+```bash
+/home/fhtw_user/sim_ws/src/sjtu_drone_camera/models/current_used_model
+```
 
-- **v1.2** - Dodano HOVERING, CENTERING, DESCENDING; precyzyjne pozycjonowanie PID; obliczanie pozycji na podstawie FOV
-- **v1.1** - Rozszerzono parametry konfiguracyjne (PID, FOV kamery, centering)
-- **v1.0** - Autonomiczna misja z YOLO v11, expanding squares, weryfikacja 5 klatek
-- **v0.9** - Integracja YOLO z mission controller
-- **v0.8** - Podstawowa maszyna stanów
+Można załadować istniejący model, lub przeprowadzić krótki proces uczenia nowego modelu detekcji na wybranym obiekcie.
+
+Podczas uruchomionego środowiska można zapisać obecną klatkę obrazu dolnej kamery drona do pliku w celu wyuczenia na nim modelu detekcji.
+```bash
+ros2 run sjtu_drone_camera image_saver
+```
+
+W celu wyuczenia nowego modelu detekcji trzeba skorzystać z poniższych skryptów:
+- Wyznaczenie obiektu + albumentacja
+```bash
+cd /home/fhtw_user/sim_ws/src/sjtu_drone_camera/scripts/
+python3 load_image.py --image ../target_images/human.jpg --bbox false
+```
+- traning modelu
+```bash
+python3 train_model.py --album ../albums/album_human --class-name human --epochs 20 --batch 4
+```
+
+- ewentualna walidacja wyuczonego modelu
+```bash
+python3 test_model.py --weights ../models/album_human_human_finetune/weights/best.pt --source ../albums/album_human/val/images
+```
+
+- wybór aktualnie używanego modelu detekcji przez drona
+```bash
+python3 load_model.py ../models/album_human_human_finetune/weights/best.pt
+```
+
+
+
 
 ---
 

@@ -6,6 +6,11 @@ from cv_bridge import CvBridge
 import cv2
 import time
 
+"""
+ros2 run sjtu_drone_camera image_saver
+
+Zapisuje aktualną klatkę obrazu kamery dolnej do pliku
+"""
 
 class ImageSaver(Node):
     def __init__(self):
@@ -31,7 +36,7 @@ def main(args=None):
     try:
         while rclpy.ok() and not node.saved:
             rclpy.spin_once(node, timeout_sec=0.1)
-        print("ImageSaver: process completed")
+        print("Zapisano obraz")
     finally:
         node.destroy_node()
         rclpy.shutdown()

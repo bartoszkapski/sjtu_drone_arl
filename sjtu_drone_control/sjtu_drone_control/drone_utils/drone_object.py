@@ -138,7 +138,7 @@ class DroneObject(Node):
         """
         if self.isFlying:
             return False
-        self.logger.info("Taking off")
+        # self.logger.info("Taking off")
         self.pubTakeOff.publish(Empty())
         self.isFlying = True
         return True
@@ -150,7 +150,7 @@ class DroneObject(Node):
         """
         if not self.isFlying:
             return False
-        self.logger.info("Landing")
+        # self.logger.info("Landing")
         self.pubLand.publish(Empty())
         self.isFlying = False
         return True
@@ -328,8 +328,6 @@ class DroneObject(Node):
     def cb_state(self, msg: Int8):
         """Callback for the drone state"""
         self._state = STATES[msg.data]
-        # Reduced logging frequency to avoid spam
-        self.logger.info("State: {}".format(self._state), throttle_duration_sec=10)
 
     def cb_cmd_mode(self, msg: String):
         """Callback for the command mode"""

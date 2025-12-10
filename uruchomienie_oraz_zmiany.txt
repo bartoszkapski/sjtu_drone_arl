@@ -15,16 +15,14 @@ bash src/scripts/launch_human_search.sh                  <----------------------
 src/sjtu_drone_control/sjtu_drone_control/drone_search_mission.py
 
 
-*** Dokumentacja z czata - lokalizacja plików:
-src/CZATOWY_WYSRYW
+
 
 
 możliwe poprawki TODO's:
 - czasem nie do końca działa dokładnie centrowanie nad człowiekiem przez ruszanie się kamery podczas lotu na boki
 - mozna tez doregulowac PID w paramertach dla lepszej stabilności/ bądź zmienic trajektorie na więcej punktów 
 - dodac jakieś śmieci na mapie, zmniejszyć nie potrzebna taka duża, ekslopracja będzie na +-12m od punktu startowego, uważać zeby dron nie wleciał w coś na 10m w tym obszarze np. dom 
-- zmienić w kodzie wszystko co wygląda na wysrane z czata (np. komentarze z ikonkami itp.)(ja już troche zmieniłem w drone_search_mission.py przy parametrach),
- może jakaś refaktoryzacja kodu na inne nazwy ludzkie/studenckie czy coś
+
 ----------------------------------------------------------------------------
 
 

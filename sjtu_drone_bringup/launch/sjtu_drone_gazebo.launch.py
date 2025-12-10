@@ -24,7 +24,8 @@ from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 import xacro
-
+# import logging
+# logging.root.setLevel(logging.FATAL)
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time", default="true")
@@ -113,7 +114,8 @@ def generate_launch_description():
             package="sjtu_drone_bringup",
             executable="spawn_drone",
             arguments=[robot_desc, model_ns],
-            output="screen"
+            output="screen",
+            # arguments=['--ros-args --disable-stdout-logs']
         ),
 
         Node(

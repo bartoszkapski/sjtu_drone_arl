@@ -303,7 +303,7 @@ void DroneSimpleControllerPrivate::LandCallback(const std_msgs::msg::Empty::Shar
   if (navi_state == FLYING_MODEL || navi_state == TAKINGOFF_MODEL) {
     navi_state = LANDING_MODEL;
     m_timeAfterCmd = 0;
-    RCLCPP_INFO(ros_node_->get_logger(), "Quadrotor lands!!");
+    // RCLCPP_INFO(ros_node_->get_logger(), "Quadrotor lands!!");
   }
 }
 
@@ -404,7 +404,7 @@ void DroneSimpleControllerPrivate::UpdateState(double dt)
     m_timeAfterCmd += dt;
     if (m_timeAfterCmd > 1.0) {
       navi_state = LANDED_MODEL;
-      std::cout << "Landed!" << std::endl;
+      // std::cout << "Landed!" << std::endl;
     }
   } else {
     m_timeAfterCmd = 0;
