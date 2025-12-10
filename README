@@ -50,50 +50,6 @@ source install/setup.bash
 bash src/scripts/launch_human_search.sh
 ```
 
-
-## 📊 Monitoring misji
-
-### Logi w terminalu
-System wyświetla szczegółowe informacje:
-
-```
-╔══════════════════════════════════════════════════════════╗
-║   🚁 DRONE HUMAN SEARCH MISSION - STARTED 🚁           ║
-╚══════════════════════════════════════════════════════════╝
-📐 Search pattern: 2.0m → 20.0m (increment: 2.0m)
-🎯 Detection threshold: 0.8 (5 consecutive frames)
-✈️  Flight altitude: 10.0m
-──────────────────────────────────────────────────────────
-🏠 Home position saved: x=0.0, y=0.0, z=0.0
-⬆️  Climbing... 4.3m / 10.0m
-✅ Takeoff complete - waiting 3.0s
-🔍 Starting search mission...
-📍 Waypoint 1/4 reached (square: 2m)
-📍 Waypoint 2/4 reached (square: 2m)
-🔍 Expanding search - new square size: 4m
-🎯 HUMAN CONFIRMED! (avg confidence: 0.85, 5 detections)
-╔══════════════════════════════════════════════╗
-║  🎯 HUMAN DETECTED! Switching to HOVERING   ║
-╚══════════════════════════════════════════════╝
-🔄 Returning to detection point... 3.2m
-✅ Hovering stabilized! Reading camera...
-📐 Calculated human position: x=4.2, y=3.1 (offset from drone)
-🎯 Centering over human... 2.1m remaining
-✅ Centered above human! (offset: 0.08m)
-⭕ Circling... rotation 0.5/2.0
-⭕ Circling... rotation 1.0/2.0
-⭕ Circling... rotation 1.5/2.0
-✅ Circling complete (2.0 rotations)
-🏠 Returning home... 8.3m remaining
-✅ Returned to home position - preparing to descend
-⬇️  Descending... 8.2m / 1.0m
-✅ Reached descent altitude (1.1m) - ready to land
-🛬 Landing...
-╔══════════════════════════════════════════════════════════╗
-║        ✅ MISSION COMPLETE - DRONE LANDED ✅            ║
-╚══════════════════════════════════════════════════════════╝
-```
-
 ### ROS2 Topics
 
 **Status misji:**
