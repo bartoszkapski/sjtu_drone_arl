@@ -7,7 +7,6 @@
 ## 📋 Spis treści
 - [Opis projektu](#opis-projektu)
 - [Uruchomienie programu](#uruchomienie-programu)
-- [Monitoring misji](#monitoring-misji)
 - [Parametry konfiguracyjne](#parametry-konfiguracyjne)
 - [Struktura projektu](#struktura-projektu)
 - [Wybór obiektu detekji](#Wybór-obiektu-detekcji)
@@ -17,26 +16,16 @@
 ## 🎯 Opis projektu
 
 System autonomicznego drona, który:
-1. **Startuje** z miejsca na wysokość 10m i czeka 3 sekundy
-2. **Przeszukuje** obszar po rozszerzających się kwadratach (2m → 20m, +2m)
-3. **Wykrywa** ludzi za pomocą YOLO v11 light (weryfikacja 5 kolejnych klatek, confidence > 0.8)
+1. **Startuje**
+2. **Przeszukuje** obszar po rozszerzających się kwadratach
+3. **Wykrywa** ludzi za pomocą YOLO v11 light
 4. **Zawisa** i wraca do punktu detekcji
-5. **Centruje się** precyzyjnie nad wykrytą osobą (PID, tolerancja 0.1m)
-6. **Krąży** 2x nad wykrytą osobą (promień 2m)
+5. **Centruje się** precyzyjnie nad wykrytą osobą
+6. **Krąży** 2x nad wykrytą osobą 
 7. **Wraca** do punktu startu, **schodzi** do 1m i ląduje
 
-### Kluczowe cechy:
-- ✅ Detekcja w czasie rzeczywistym (YOLO v11 light)
-- ✅ Weryfikacja wielokrotna (5 kolejnych klatek)
-- ✅ Rozszerzające się kwadraty poszukiwania
-- ✅ Precyzyjne pozycjonowanie PID
-- ✅ Obliczanie pozycji wykrytej osoby na podstawie FOV kamery
-- ✅ Wszystkie parametry w jednym miejscu
-- ✅ Szczegółowe logi w terminalu
 
 ---
-
-
 
 
 ## 🚀 Uruchomienie programu
