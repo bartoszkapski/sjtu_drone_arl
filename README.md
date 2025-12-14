@@ -4,6 +4,12 @@
 
 ---
 
+<td align="center">
+    <img src="git_media/arl.gif" width="100%"/>
+</td>
+
+---
+
 ## 📋 Spis treści
 - [Opis projektu](#opis-projektu)
 - [Uruchomienie programu](#uruchomienie-programu)
