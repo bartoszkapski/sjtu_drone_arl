@@ -28,8 +28,11 @@ System autonomicznego drona, który:
 
 
 ## 🚀 Uruchomienie programu
-
-
+```bash
+cd sjtu_drone_arl
+code . 
+```
+Nacisnąć "Reopen in container" w VS code.
 ## Przed pierwszym uruchomieniem konieczna jest aktualizacja bibliotek odpowiedzlnych za przetwarzanie obrazu kamery
 ```bash
 cd ~/sim_ws
