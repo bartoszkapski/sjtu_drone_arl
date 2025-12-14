@@ -4,11 +4,10 @@
 
 ---
 
-## 📋 Spis treśc
+## 📋 Spis treści
 - [Opis projektu](#opis-projektu)
 - [Uruchomienie programu](#uruchomienie-programu)
 - [Parametry konfiguracyjne](#parametry-konfiguracyjne)
-- [Struktura projektu](#struktura-projektu)
 - [Wybór obiektu detekji](#Wybór-obiektu-detekcji)
 
 ---
@@ -78,44 +77,42 @@ W RViz2 dodaj:
 Edytuj plik: `sjtu_drone_control/sjtu_drone_control/drone_search_mission.py`
 
 ```python
-class MissionConfig:
-    """Centralized configuration - MODIFY HERE"""
+class MissionConfig:    
+    # param kwadrat
+    SQUARE_START_SIZE = 4.0                 # poczatkowy rozmiar kwadratu
+    SQUARE_INCREMENT = 2.0                  # o ile zwiększać
+    SQUARE_MAX_SIZE = 20.0                  # max rozmiar kwadratru
     
-    # Search pattern (expanding squares)
-    SQUARE_START_SIZE = 2.0      # [m] Początkowy rozmiar kwadratu
-    SQUARE_INCREMENT = 2.0        # [m] Przyrost przy każdej iteracji
-    SQUARE_MAX_SIZE = 20.0        # [m] Maksymalny rozmiar
+    # param lot
+    SEARCH_ALTITUDE = 10.0                  # wysokośc lotu 
+    DESCENT_ALTITUDE = 1.0                  # wyokośc przed lądowaniem
+    CIRCLE_RADIUS = 2.0                     # promień krążenia nad obiektem
+    CIRCLE_ROTATIONS = 2.0                  # liczba pełnych obrotów nad obiektem
+
     
-    # Flight parameters
-    SEARCH_ALTITUDE = 10.0        # [m] Wysokość lotu poszukiwawczego
-    DESCENT_ALTITUDE = 1.0        # [m] Zniżanie przed lądowaniem
-    CIRCLE_RADIUS = 2.0           # [m] Promień krążenia
-    CIRCLE_ROTATIONS = 2.0        # Liczba okrążeń
-    SEARCH_SPEED_DELAY = 0.5      # [s] Opóźnienie między punktami trasy
+    # PID 
+    PID_KP = 0.5     
+    PID_KI = 0.02     
+    PID_KD = 0.5     
+    PID_MAX_VEL = 1.0 
     
-    # PID Controllers
-    PID_KP = 0.8                  # Współczynnik proporcjonalny
-    PID_KI = 0.10                 # Współczynnik całkujący
-    PID_KD = 0.3                  # Współczynnik różniczkujący
-    PID_MAX_VEL = 1.0             # [m/s] Maksymalna prędkość
+    # centrowanie
+    CENTERING_TOLERANCE = 0.5               # tolerancja odległości
     
-    # Centering
-    CENTERING_TOLERANCE = 0.1     # [m] Tolerancja centrowania nad osobą
+    # kamera
+    CAMERA_HORIZONTAL = 60.0                # poziomy zakres widzenia
+    CAMERA_VERTICAL = 33.75                 # pionowy zakres widzenia
     
-    # Camera parameters
-    CAMERA_FOV_HORIZONTAL = 60.0  # [deg] Kąt widzenia poziomy
-    CAMERA_FOV_VERTICAL = 33.75   # [deg] Kąt widzenia pionowy
+    # detekcja YOLO
+    DETECTION_CONFIDENCE_THRESHOLD = 0.8    # minimalny próg detekcji
+    DETECTION_CONSECUTIVE_FRAMES = 7        # liczba kolejnych klatek potrzebnych
     
-    # Detection parameters
-    DETECTION_CONFIDENCE_THRESHOLD = 0.8   # Min confidence YOLO
-    DETECTION_CONSECUTIVE_FRAMES = 5       # Weryfikacja N klatek
+    # czasówki
+    TAKEOFF_WAIT_TIME = 3.0                 # czas oczekiwania po starcie
+    WAYPOINT_TOLERANCE = 1.5                # tolerancja odległości do uznania punktu za osiągnięty
     
-    # Timing
-    TAKEOFF_WAIT_TIME = 3.0       # [s] Czas oczekiwania po starcie
-    WAYPOINT_TOLERANCE = 0.3      # [m] Tolerancja dotarcia do punktu
-    
-    # Control loop
-    CONTROL_LOOP_RATE = 5.0       # [Hz] Częstotliwość pętli
+    # częstotliwość sterowań
+    CONTROL_LOOP_RATE = 5.0      
 ```
 
 **Po zmianie - PAMIETAJ PRZEBUDOWAĆ!:**
@@ -131,7 +128,7 @@ source install/setup.bash
 
 ```
 sjtu_drone_control/
-├── drone_search_mission.py       # ← GŁÓWNY kontroler misji
+├── drone_search_mission.py       #  GŁÓWNY kontroler misji
 │   ├── MissionConfig              #   Parametry (TUTAJ edytuj)
 │   ├── MissionState               #   Stany maszyny
 │   └── DroneSearchMission         #   Logika misji
@@ -142,15 +139,15 @@ sjtu_drone_control/
 └── ...
 
 sjtu_drone_camera/
-├── detect_object_by_yolo.py       # ← YOLO detector
-│   └── /detection/human_detected  #   Publikuje: {detected, confidence, count}
+├── detect_object_by_yolo.py       #  YOLO detector
+│   └── /detection/human_detected  #  publikuje: {detected, confidence, count}
 │
-└── models/current_used_model/     # Model YOLO v11
+└── models/current_used_model/     # model yolov11
     └── current_used_model.pt
 
 sjtu_drone_bringup/
 └── launch/
-    └── human_search_mission.launch.py  # ← Launch file (JEDNA KOMENDA)
+    └── human_search_mission.launch.py  # Launch file (JEDNA KOMENDA)
 ```
 
 ---
